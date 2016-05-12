@@ -37,6 +37,12 @@
             </div>
         </div>
         
+        <div class="thanks hidden">
+            <h1>
+                THANK YOU FOR YOUR SUBMISSION!
+            </h1>
+        </div>
+        
         <div class="forms">
             <div id="modules">
                 <div id="module-1"><img src="images/module_1.png"></div>
@@ -83,9 +89,9 @@
                 <div class="eyes-below hidden"><img src="images/eyes-20.png"></div>
                 <h1>This photo is being used to design the public space below</h1>
             </li>
-            <li><img src="images/photo_2.png"></li>
-            <li><img src="images/photo_3.png"></li>
-            <li><img src="images/photo_4.png"></li>
+            <li class="other"><img class="other-img" src="images/photo_2.png"></li>
+            <li class="other"><img class="other-img" src="images/photo_3.png"></li>
+            <li class="other"><img class="other-img" src="images/photo_4.png"></li>
         </ul>
     </div>
         
@@ -130,11 +136,6 @@
                 secret: "pneguga7vpbxy5f",
                 token: "p9-V9pdznKoAAAAAAAAB3THZmV0tdWDdK8BYtmDBUqSz1flDtlWho-bwOZUxmT1b"
             });
-            
-//            var client = new Dropbox.Client({
-//                key: "tt34ahtartutnwo",
-//                secret: "pneguga7vpbxy5f"
-//            });
             
             init();
             render();
@@ -432,15 +433,6 @@
                 
             }
             
-//            function save() {
-//                                
-//                scene.remove( rollOverMesh );
-//                render();
-//                window.open( renderer.domElement.toDataURL('image/png'), 'mywindow' );
-//                scene.add( rollOverMesh );
-//                return false;
-//            }
-            
             function _base64ToArrayBuffer(base64) {
                 base64 = base64.split('data:image/png;base64,').join('');
                 var binary_string =  window.atob(base64),
@@ -456,7 +448,10 @@
 
             function savePicture() {
                 
-                    var fileName = Math.floor((Math.random() * 10000) + 1) + ".png";
+                    var fileName = Math.floor((Math.random() * 100000) + 1) + ".png";
+                    var thankYou = $('.thanks');
+                
+                    var delay = 3000;
                                 
                     // Try to use cached credentials.
                     client.authenticate( function(error, client) {
@@ -471,6 +466,7 @@
                         var imageSringData = renderer.domElement.toDataURL('image/png');
                         //Convert it to an arraybuffer
                         var imageData = _base64ToArrayBuffer(imageSringData);
+                          
 
                         client.writeFile(fileName, imageData, function(error, stat) {
                         if (error) {
@@ -479,6 +475,15 @@
                             console.log('File written successfully!');
                             
                         }
+                        
+                        thankYou.removeClass('hidden');    
+                            
+                        setTimeout(function() {
+                        
+                            window.location.reload();
+                                                            
+                        }, delay);
+                            
                     });
                         scene.add( rollOverMesh );
                         return false;  
